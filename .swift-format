@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "rules": {
+    "AllmanBraces": true,
+    "IndentWidth": 2,
+    "TabWidth": 2,
+    "UseTabs": false,
+    "LineLength": 120,
+    "RespectExistingLineBreaks": true,
+    "SpaceAroundOperators": true,
+    "TrailingCommas": "always"
+  }
+}

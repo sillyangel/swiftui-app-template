@@ -1,0 +1,86 @@
+name: iOS Build
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'README.md'
+      - '*.md'
+      - '.github/**'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Generate Xcode project
+        run: xcodegen generate
+
+      - name: Calculate version
+        id: version
+        run: |
+          RUN_NUM=${{ github.run_number }}
+          if [ "$RUN_NUM" -le 99 ]; then
+            VERSION="1.0.$RUN_NUM"
+          else
+            MINOR=$((RUN_NUM / 100))
+            PATCH=$((RUN_NUM % 100))
+            VERSION="1.$MINOR.$PATCH"
+          fi
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+          echo "BUILD_VERSION=$RUN_NUM" >> $GITHUB_OUTPUT
+
+      - name: Build iOS app
+        run: |
+          xcodebuild \
+            -project HelloWorld.xcodeproj \
+            -scheme HelloWorld \
+            -sdk iphonesimulator \
+            -configuration Debug \
+            -destination 'generic/platform=iOS Simulator' \
+            MARKETING_VERSION="${{ steps.version.outputs.VERSION }}" \
+            CURRENT_PROJECT_VERSION="${{ steps.version.outputs.BUILD_VERSION }}" \
+            build
+
+      - name: Build archive
+        run: |
+          xcodebuild \
+            -project HelloWorld.xcodeproj \
+            -scheme HelloWorld \
+            -sdk iphoneos \
+            -configuration Release \
+            -destination 'generic/platform=iOS' \
+            -archivePath build/HelloWorld.xcarchive \
+            MARKETING_VERSION="${{ steps.version.outputs.VERSION }}" \
+            CURRENT_PROJECT_VERSION="${{ steps.version.outputs.BUILD_VERSION }}" \
+            archive \
+            CODE_SIGNING_ALLOWED=NO
+
+      - name: Package unsigned IPA
+        run: |
+          mkdir -p build/Payload
+          cp -R build/HelloWorld.xcarchive/Products/Applications/*.app build/Payload/
+          cd build
+          zip -r HelloWorld.ipa Payload
+
+      - name: Upload iOS IPA artifact
+        uses: actions/upload-artifact@v5
+        with:
+          name: HelloWorld-ipa
+          path: build/HelloWorld.ipa
+          if-no-files-found: error
+
+      - name: Upload iOS .app artifact
+        uses: actions/upload-artifact@v5
+        with:
+          name: HelloWorld-app
+          path: build/Payload/*.app
+          if-no-files-found: error

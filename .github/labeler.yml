@@ -1,0 +1,137 @@
+# GitHub Actions Labeler Configuration
+# See: https://github.com/actions/labeler
+
+# Documentation
+documentation:
+  - README*.md
+  - CHANGELOG*.md
+  - CONTRIBUTING*.md
+  - LICENSE*.md
+  - SECURITY*.md
+  - "*.md"
+  - "docs/**"
+  - "*.mdx"
+
+# Code - Swift source
+code:
+  - "Sources/**/*.swift"
+  - "Sources/**/*.h"
+  - "Sources/**/*.m"
+  - "Sources/**/*.mm"
+  - "Sources/**/*.cpp"
+  - "Sources/**/*.c"
+  - "Sources/**/*.hpp"
+
+# Tests
+tests:
+  - "Tests/**/*.swift"
+  - "**/Tests/**/*.swift"
+  - "*_test.swift"
+  - "Tests/**"
+
+# CI/CD
+ci:
+  - ".github/**/*.yml"
+  - ".github/**/*.yaml"
+  - ".github/workflows/**"
+  - ".gitlab-ci.yml"
+  - ".gitlab-ci.yaml"
+  - "Jenkinsfile"
+  - ".circleci/**"
+  - ".travis.yml"
+  - ".travis.yaml"
+
+# Dependencies / Package management
+dependencies:
+  - "Package.swift"
+  - "Package.resolved"
+  - "*.xcodeproj/**"
+  - "*.xcworkspace/**"
+  - "Cartfile*"
+  - "Podfile*"
+  - "Gemfile*"
+  - "composer.json"
+  - "composer.lock"
+  - "yarn.lock"
+  - "pnpm-lock.yaml"
+  - "requirements.txt"
+  - "pyproject.toml"
+  - "Cargo.toml"
+  - "Cargo.lock"
+  - "go.mod"
+  - "go.sum"
+  - "project.yml"
+
+# Configuration / Build config
+configuration:
+  - "project.yml"
+  - "project.yaml"
+  - "config/**"
+  - "*.config.json"
+  - "*.config.yaml"
+  - "*.config.yml"
+  - "*.config.toml"
+  - "*.config.ini"
+  - "*.config.xml"
+  - "*.config.plist"
+  - ".env*"
+  - "*.plist"
+  - "Info.plist"
+  - "config.*"
+
+# Assets / Resources
+assets:
+  - "*.xcassets"
+  - "*.imageset"
+  - "*.appiconset"
+  - "*.colorset"
+  - "*.png"
+  - "*.jpg"
+  - "*.jpeg"
+  - "*.gif"
+  - "*.svg"
+  - "*.ico"
+  - "*.icns"
+  - "*.pdf"
+  - "*.heic"
+  - "*.webp"
+  - "Assets/**"
+  - "Resources/**"
+  - "fonts/**"
+  - "*.ttf"
+  - "*.otf"
+  - "*.woff"
+  - "*.woff2"
+
+# Localization
+localization:
+  - "*.lproj/**"
+  - "*.strings"
+  - "*.stringsdict"
+  - "Localizable.*"
+
+# Scripts / Tools
+scripts:
+  - "scripts/**"
+  - "tools/**"
+  - "*.sh"
+  - "Makefile"
+  - "justfile"
+  - "Taskfile.*"
+  - "*.py"
+  - "bin/**"
+
+# UI / SwiftUI / View files
+ui:
+  - "Sources/**/*View.swift"
+  - "Sources/Views/**"
+  - "Sources/Components/**"
+
+# Model / Data layer
+data:
+  - "Sources/Models/**"
+  - "Sources/Entities/**"
+  - "Sources/Data/**"
+  - "Sources/Repository/**"
+  - "Sources/Services/**"
+  - "Sources/Network/**"
